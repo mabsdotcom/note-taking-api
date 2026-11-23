@@ -1,0 +1,29 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Run API (dev, H2)",
+      "request": "launch",
+      "mainClass": "com.notesapp.NoteTakingApiApplication",
+      "projectName": "note-taking-api",
+      "env": {
+        "SPRING_PROFILES_ACTIVE": "dev"
+      }
+    },
+    {
+      "type": "java",
+      "name": "Run API (prod, PostgreSQL)",
+      "request": "launch",
+      "mainClass": "com.notesapp.NoteTakingApiApplication",
+      "projectName": "note-taking-api",
+      "env": {
+        "SPRING_PROFILES_ACTIVE": "prod",
+        "DB_URL": "jdbc:postgresql://localhost:5432/notesdb",
+        "DB_USERNAME": "postgres",
+        "DB_PASSWORD": "postgres",
+        "JWT_SECRET": "replace-with-a-long-random-secret-of-32-plus-chars"
+      }
+    }
+  ]
+}
