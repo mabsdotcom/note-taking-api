@@ -1,0 +1,43 @@
+### Quick manual tests with the VS Code "REST Client" extension (click "Send Request").
+@baseUrl = http://localhost:8080
+
+### 1. Login as the seeded demo user
+# @name login
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{ "username": "demo", "password": "Demo@1234" }
+
+###
+@token = {{login.response.body.accessToken}}
+
+### 2. Search notes (text + tag, sorted by title)
+GET {{baseUrl}}/api/notes?q=meeting&tags=urgent&sort=title,asc
+Authorization: Bearer {{token}}
+
+### 3. Create a rich text note
+POST {{baseUrl}}/api/notes
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "From VS Code",
+  "content": "<h2>Hello</h2><p>This is <b>rich</b> text<script>alert(1)</script></p>",
+  "tags": ["vscode", "demo"],
+  "pinned": true
+}
+
+### 4. Validation error example
+POST {{baseUrl}}/api/notes
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{ "content": "missing title" }
+
+### 5. Export as CSV
+GET {{baseUrl}}/api/notes/export
+Authorization: Bearer {{token}}
+
+### 6. Admin endpoint as a normal user -> 403
+GET {{baseUrl}}/api/admin/users
+Authorization: Bearer {{token}}
